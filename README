@@ -1,0 +1,19 @@
+1. Numpy ve pandas kütüphanesi
+
+sudo apt-get install python-pip
+sudo pip install numpy
+sudo pip install pandas
+
+2.Sklearn kütüphanesi
+
+sudo pip install sklearn
+
+3.Kodu çalıştırmak için:
+
+split.py dosyası çalıştırılır.
+
+4.Hazır ayrılmış dataset için: 
+
+test('csv/test.csv','weights.csv').start() 
+
+kullanılır.
