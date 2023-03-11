@@ -12,8 +12,12 @@ sudo pip install sklearn
 
 split.py dosyası çalıştırılır.
 
-4.Hazır ayrılmış dataset için: 
+4.Eğitim işlemi için: 
 
-test('csv/test.csv','weights.csv').start() 
+neuralNetwork('csv/train.csv').start()
+
+5.Test işlemi için:
+
+test('csv/test.csv').start()
 
 kullanılır.
