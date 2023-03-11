@@ -1,18 +1,17 @@
 from train import Definition
 from train import Train
-from train import neuralNetwork
-import pandas as pd
-import numpy as np
-
+import joblib
 
 class test():
-    def __init__(self,csv,weights):
+    def __init__(self,csv):
         self.csv = csv
-        self.weights = weights
 
     def start(self):
         m = 0
-        w,w2,bias,bias2 = neuralNetwork('csv/train.csv').start()
+        w = joblib.load('weights1.sav')
+        w2 = joblib.load('weights2.sav')
+        bias = joblib.load('bias1.sav')
+        bias2 = joblib.load('bias2.sav')
         Test = Definition(self.csv)           #Ve sistemimizi tahmin yapabilir duruma getirmiş oluyoruz.
         CSV = Definition(self.csv)
         for k in range(len(Test.Species)):
@@ -22,14 +21,13 @@ class test():
             bbb = Train(w2,bias2,a,CSV.Species[k,4])
             bb = bbb.ileriYayilim()
             b = bbb.ActivationFuncLeakyRelu(bb)
-            # print(CSV.Species[k,4],' value ',b)
 
-            if   0 < b < 1.5:
+            if   0 < b < 1.4:
                 print(k+1,b,'Iris-setosa',Test.x_data[k,5])
                 if Test.x_data[k,5] != 'Iris-setosa': #Hataların olduğunu ve kaç tane olduğunu çıktı olarak göstermesi
                     m += 1
                     print(f'Wrong {m}') 
-            elif 1.5 < b < 2.3:
+            elif 1.4 < b < 2.3:
                 print(k+1,b,'Iris-versicolor',Test.x_data[k,5])
                 if Test.x_data[k,5] != 'Iris-versicolor':
                     m += 1

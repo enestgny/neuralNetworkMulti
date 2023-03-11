@@ -1,8 +1,7 @@
 from matplotlib import pyplot as plt #Grafik oluşturmak için
 import numpy as np
 import pandas as pd
-import sympy as sym
-from sympy import diff
+import joblib
 
 plot_x2 = []
 plot_y2 = []
@@ -96,23 +95,41 @@ class neuralNetwork():
         arg = np.random.default_rng(1) #Random sayı üretmek için
         w = arg.random((3,4))
         w2 = arg.random((1,3))
+    def Error(self,z):
+        a = 1/2*(z-self.yDegeri)**2
+        return a
+
+class neuralNetwork():
+    def __init__(self,csv):
+        self.csv = csv
+    
+    def start(self):
+        p=0
+        arg = np.random.default_rng(1) #Random sayı üretmek için
+        w = arg.random((3,4))
+        w2 = arg.random((1,3))
         bias = arg.random()
         bias2 = arg.random()
         CSV = Definition(self.csv)
-        for i in range(len(CSV.data)):              # Tanımladığımız  fonksiyonlara datamızı okutuyoruz.
-            R1 = Train(w,bias,CSV.x[i],CSV.Species[i,4])
-            R22 = R1.ileriYayilim()
-            R2 = R1.ActivationFuncLeakyRelu(R22)
-            L1 = Train(w2,bias2,R2,CSV.Species[i,4])
-            L22 = L1.ileriYayilim()
-            L2 = L1.ActivationFuncLeakyRelu(L22)
-            L3 = L1.Error(L2)
-            print('Error',L3)
-            dW1, db1, dW2, db2 = R1.derivative(L2,R2,CSV.x[i],w2)
-            w2,bias2,w,bias = R1.backward(w2,dW1, db1, dW2, db2,bias2,w,bias)
-            plot_x2.append(i) #Grafik oluşturabilmek için değerlerimizi liste şeklinde topluyoruz.
-            plot_y2.append(L3)
+        for k in range(50):#Çok katmanlıda sadece değerleri döndürmek yetmedi. Döngüyü arttırdığımda hatalı bulduğu değer sayısı azaldı.
+            for i in range(len(CSV.data)):              # Tanımladığımız  fonksiyonlara datamızı okutuyoruz.
+                p+= 1
+                R1 = Train(w,bias,CSV.x[i],CSV.Species[i,4])
+                R22 = R1.ileriYayilim()
+                R2 = R1.ActivationFuncLeakyRelu(R22)
+                L1 = Train(w2,bias2,R2,CSV.Species[i,4])
+                L22 = L1.ileriYayilim()
+                L2 = L1.ActivationFuncLeakyRelu(L22)
+                L3 = L1.Error(L2)
+                print('Error',L3)
+                dW1, db1, dW2, db2 = R1.derivative(L2,R2,CSV.x[i],w2)
+                w2,bias2,w,bias = R1.backward(w2,dW1, db1, dW2, db2,bias2,w,bias)
+                plot_x2.append(p) #Grafik oluşturabilmek için değerlerimizi liste şeklinde topluyoruz.
+                plot_y2.append(L3)
         plt.title("Value of error function")#Grafiğe isim verme
         plt.plot(plot_x2,plot_y2,color ="red")
         plt.show()
-        return w,w2,bias,bias2
+        joblib.dump(w,'weights1.sav')
+        joblib.dump(w2,'weights2.sav')
+        joblib.dump(bias,'bias1.sav')
+        joblib.dump(bias2,'bias2.sav')

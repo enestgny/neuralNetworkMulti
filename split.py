@@ -1,8 +1,8 @@
 from sklearn.model_selection import train_test_split
 import numpy as np
 import pandas as pd
-from train import neuralNetwork
 from test import test
+from train import neuralNetwork
 
 df = pd.read_csv('Iris.csv')
 column_name='Species'
@@ -18,10 +18,9 @@ for i in range(len(targets)):
     elif targets[i] =='Iris-virginica':
         targets[i] = 3
 
-x_train,x_test,y_train,y_test =  train_test_split(x_type,targets,test_size=0.2,shuffle=True)
-
+x_train,x_test,y_train,y_test =  train_test_split(x_type,targets,test_size=0.1,shuffle=True)
 pd.DataFrame(x_train).to_csv("csv/train.csv")
 pd.DataFrame(x_test).to_csv("csv/test.csv")
 
-
-test('csv/test.csv','weights.csv').start()
+neuralNetwork('csv/train.csv').start()
+test('csv/test.csv').start()
