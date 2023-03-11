@@ -8,10 +8,10 @@ class test():
 
     def start(self):
         m = 0
-        w = joblib.load('weights1.sav')
-        w2 = joblib.load('weights2.sav')
-        bias = joblib.load('bias1.sav')
-        bias2 = joblib.load('bias2.sav')
+        w = joblib.load('results/weights1.sav')
+        w2 = joblib.load('results/weights2.sav')
+        bias = joblib.load('results/bias1.sav')
+        bias2 = joblib.load('results/bias2.sav')
         Test = Definition(self.csv)           #Ve sistemimizi tahmin yapabilir duruma getirmiş oluyoruz.
         CSV = Definition(self.csv)
         for k in range(len(Test.Species)):

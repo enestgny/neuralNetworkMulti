@@ -129,7 +129,7 @@ class neuralNetwork():
         plt.title("Value of error function")#Grafiğe isim verme
         plt.plot(plot_x2,plot_y2,color ="red")
         plt.show()
-        joblib.dump(w,'weights1.sav')
-        joblib.dump(w2,'weights2.sav')
-        joblib.dump(bias,'bias1.sav')
-        joblib.dump(bias2,'bias2.sav')
+        joblib.dump(w,'results/weights1.sav')
+        joblib.dump(w2,'results/weights2.sav')
+        joblib.dump(bias,'results/bias1.sav')
+        joblib.dump(bias2,'results/bias2.sav')
